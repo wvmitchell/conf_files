@@ -72,6 +72,9 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
+" Save on blur
+autocmd BufLeave,FocusLost * silent! wall
+
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
@@ -82,7 +85,6 @@ nmap <Right> <C-w>>
 nmap <Left> <C-w><
 nmap <Down> <C-w>-
 nmap <Up> <C-w>+
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -203,9 +205,9 @@ set smarttab
 set shiftwidth=2
 set tabstop=2
 
-" Linebreak on 500 characters
+" Linebreak on 80 characters
 set lbr
-set tw=120
+set tw=80
 
 set ai "Auto indent
 set si "Smart indent
@@ -328,6 +330,9 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
 "Toggle line numbers
 nmap nn :set invnumber<CR>
+
+"Set line numbers by default
+set number
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -455,3 +460,12 @@ endfunction
 if has("autocmd")
    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => React/JSX
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:jsx_ext_required = 0
+let g:snipMate = get(g:, 'snipMate', {}) " Allow for vimrc re-sourcing
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases['javascript'] = 'javascript.es6.react'
+set runtimepath^=~/.vim/bundle/ag
